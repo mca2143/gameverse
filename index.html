@@ -1,0 +1,2501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>GAMEVERSE | 24+ Cyber Arcade & Level Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;900&family=Space+Grotesk:wght@500;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #070913;
+  --bg-card: #0e1224;
+  --bg-card-hover: #141933;
+  --border: #222949;
+  --border-focus: #00f2fe;
+  --cyan: #00f2fe;
+  --cyan-glow: rgba(0, 242, 254, 0.4);
+  --purple: #9d4edd;
+  --purple-glow: rgba(157, 78, 221, 0.45);
+  --pink: #ff2a85;
+  --gold: #facc15;
+  --text: #f8fafc;
+  --muted: #94a3b8;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Outfit', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: #1e2547; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--purple); }
+
+/* Header */
+header {
+  position: sticky; top: 0; z-index: 50;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 5%;
+  background: rgba(7, 9, 19, 0.88);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(16px);
+}
+.brand {
+  display: flex; align-items: center; gap: 10px;
+  font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 800;
+  text-decoration: none; color: #fff;
+}
+.brand-icon {
+  width: 34px; height: 34px; border-radius: 8px;
+  background: linear-gradient(135deg, var(--cyan), var(--purple));
+  display: grid; place-items: center; font-size: 18px;
+  box-shadow: 0 0 16px var(--cyan-glow);
+}
+.brand span { color: var(--cyan); text-shadow: 0 0 12px var(--cyan-glow); }
+
+.nav-tools { display: flex; align-items: center; gap: 12px; }
+.nav-btn {
+  background: #12162b; border: 1px solid var(--border); color: var(--muted);
+  border-radius: 20px; padding: 6px 14px; font-size: 13px; font-weight: 600;
+  cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all .2s;
+}
+.nav-btn:hover, .nav-btn.active {
+  color: var(--cyan); border-color: var(--cyan); box-shadow: 0 0 12px var(--cyan-glow);
+}
+
+/* Main Container */
+main { max-width: 1300px; margin: 0 auto; padding: 24px 20px 80px; }
+
+/* Hero Banner */
+.hero {
+  position: relative; border-radius: 22px; padding: 40px 30px; margin-bottom: 35px;
+  background: radial-gradient(circle at 80% 20%, rgba(157,78,221,0.25), transparent 50%),
+              radial-gradient(circle at 10% 80%, rgba(0,242,254,0.18), transparent 45%),
+              linear-gradient(135deg, #10142b, #090b17);
+  border: 1px solid #2d2a54; box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+  overflow: hidden;
+}
+.hero-tag {
+  color: var(--cyan); font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px; font-weight: 700; letter-spacing: 2px;
+}
+.hero h1 {
+  font-family: 'Space Grotesk', sans-serif; font-size: clamp(32px, 5vw, 56px);
+  margin: 10px 0 14px; font-weight: 900; line-height: 1.1;
+}
+.hero p { color: var(--muted); max-width: 600px; font-size: 16px; margin-bottom: 22px; }
+.hero-stats { display: flex; gap: 20px; flex-wrap: wrap; }
+.stat-pill {
+  background: #141933; border: 1px solid #2b335c; padding: 6px 14px;
+  border-radius: 10px; font-size: 13px; font-weight: 700; color: #fff;
+}
+.stat-pill span { color: var(--cyan); }
+
+/* Filter & Search Bar */
+.catalog-head {
+  display: flex; flex-wrap: wrap; justify-content: space-between;
+  align-items: center; gap: 16px; margin-bottom: 24px;
+}
+.cat-filters { display: flex; flex-wrap: wrap; gap: 8px; }
+.filter-btn {
+  background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--muted); padding: 8px 16px; border-radius: 12px;
+  font-size: 13px; font-weight: 700; cursor: pointer; transition: all .2s;
+}
+.filter-btn:hover { color: #fff; border-color: #3b4473; }
+.filter-btn.active {
+  background: linear-gradient(135deg, var(--purple), #7928ca);
+  border-color: var(--purple); color: #fff; box-shadow: 0 0 16px var(--purple-glow);
+}
+.search-box {
+  position: relative; min-width: 250px; flex-grow: 1; max-width: 360px;
+}
+.search-box input {
+  width: 100%; background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 12px; color: #fff; padding: 10px 14px 10px 38px;
+  font-size: 14px; outline: none; transition: all .2s;
+}
+.search-box input:focus { border-color: var(--cyan); box-shadow: 0 0 14px var(--cyan-glow); }
+.search-box span { position: absolute; left: 12px; top: 10px; opacity: 0.6; }
+
+/* Game Grid */
+.game-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 18px; margin-bottom: 40px;
+}
+.game-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 16px; overflow: hidden; display: flex; flex-direction: column;
+  transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
+  position: relative;
+}
+.game-card:hover {
+  transform: translateY(-5px); border-color: var(--cyan);
+  box-shadow: 0 10px 25px -6px var(--cyan-glow);
+}
+.card-thumb {
+  height: 125px; background: radial-gradient(circle at center, #23224d, #0b0d1c 80%);
+  display: grid; place-items: center; font-size: 54px; position: relative;
+}
+.card-level-badge {
+  position: absolute; top: 10px; left: 10px;
+  background: rgba(12, 16, 33, 0.85); border: 1px solid #313963;
+  padding: 3px 8px; border-radius: 8px; font-size: 11px; font-weight: 700;
+  color: var(--cyan); backdrop-filter: blur(4px);
+}
+.card-fav-btn {
+  position: absolute; top: 10px; right: 10px;
+  background: rgba(12, 16, 33, 0.85); border: 1px solid #313963;
+  width: 32px; height: 32px; border-radius: 8px; display: grid; place-items: center;
+  cursor: pointer; font-size: 16px; color: var(--muted); transition: all .2s;
+}
+.card-fav-btn.active { color: var(--pink); border-color: var(--pink); text-shadow: 0 0 10px rgba(255,42,133,0.5); }
+.card-content { padding: 14px 16px 16px; display: flex; flex-direction: column; flex-grow: 1; }
+.card-category { font-size: 11px; color: var(--purple); font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+.card-content h3 { font-size: 17px; margin: 4px 0 6px; font-weight: 700; color: #fff; }
+.card-content p { font-size: 12px; color: var(--muted); line-height: 1.45; flex-grow: 1; margin-bottom: 12px; }
+.card-footer { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.card-high { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--gold); }
+.play-card-btn {
+  background: linear-gradient(135deg, var(--cyan), #0070f3);
+  color: #040915; font-weight: 800; border: none; padding: 7px 14px;
+  border-radius: 8px; font-size: 12px; cursor: pointer; transition: all .2s;
+}
+.play-card-btn:hover { filter: brightness(1.2); box-shadow: 0 0 12px var(--cyan-glow); }
+
+/* ========================================================
+   MODAL / IN-GAME ARENA
+======================================================== */
+.arena-overlay {
+  position: fixed; inset: 0; z-index: 100;
+  background: rgba(4, 6, 14, 0.92); backdrop-filter: blur(12px);
+  display: none; place-items: center; padding: 14px;
+}
+.arena-overlay.open { display: grid; animation: fadeIn .2s ease forwards; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.arena-box {
+  background: #0b0f20; border: 1px solid #2a3461; border-radius: 20px;
+  width: 100%; max-width: 720px; max-height: 94vh;
+  display: flex; flex-direction: column; overflow: hidden;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.85); position: relative;
+}
+.arena-bar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 18px; background: #121833; border-bottom: 1px solid #242d55;
+}
+.arena-info { display: flex; align-items: center; gap: 10px; }
+.arena-badge-icon { font-size: 26px; }
+.arena-name { font-size: 17px; font-weight: 800; color: #fff; }
+.arena-sub { font-size: 12px; color: var(--cyan); font-weight: 600; }
+
+.arena-hud {
+  display: flex; gap: 16px; align-items: center;
+  background: #080b18; padding: 5px 12px; border-radius: 10px; border: 1px solid #1f274a;
+}
+.hud-item { font-size: 12px; font-family: 'JetBrains Mono', monospace; }
+.hud-val { font-weight: 800; color: #fff; }
+.hud-val.sc { color: var(--cyan); }
+.hud-val.hi { color: var(--gold); }
+
+.arena-actions { display: flex; gap: 8px; }
+.arena-btn {
+  background: #1b2347; border: 1px solid #333f73; color: #fff;
+  padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 700;
+  cursor: pointer; transition: all .15s;
+}
+.arena-btn:hover { background: var(--purple); border-color: var(--purple); }
+.arena-close { background: #2f192b; border-color: #592544; color: #ff6584; }
+.arena-close:hover { background: #ff2a85; color: #fff; border-color: #ff2a85; }
+
+/* Level Selector strip */
+.arena-levels-strip {
+  display: flex; align-items: center; gap: 8px; padding: 8px 18px;
+  background: #0e1329; border-bottom: 1px solid #1d2547; overflow-x: auto;
+}
+.level-strip-label { font-size: 11px; font-weight: 800; color: var(--muted); text-transform: uppercase; white-space: nowrap; }
+.level-tabs { display: flex; gap: 6px; }
+.lvl-tab {
+  background: #151b38; border: 1px solid #26315c; color: var(--muted);
+  border-radius: 6px; padding: 4px 10px; font-size: 11px; font-weight: 700;
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+}
+.lvl-tab:hover { color: #fff; border-color: var(--cyan); }
+.lvl-tab.active {
+  background: var(--cyan); color: #040915; border-color: var(--cyan);
+  box-shadow: 0 0 10px var(--cyan-glow);
+}
+
+.arena-stage {
+  padding: 16px; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; position: relative;
+  background: radial-gradient(circle at center, #101633 0%, #060914 100%);
+  min-height: 400px; max-height: 60vh; overflow-y: auto;
+}
+
+canvas.game-canvas {
+  background: #030611; border: 2px solid #222b52;
+  border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+  max-width: 100%; max-height: 400px; display: block;
+}
+
+.game-hud-msg {
+  margin-top: 10px; font-size: 14px; font-weight: 700;
+  color: var(--cyan); text-align: center; min-height: 22px;
+}
+
+/* Touch Pad Controls */
+.mobile-controls {
+  padding: 10px 16px; background: #0b0e1e; border-top: 1px solid #1e264a;
+  display: flex; justify-content: center; align-items: center; gap: 14px;
+}
+.touch-btn {
+  background: #182042; border: 1px solid #2e3b70; color: #fff;
+  border-radius: 10px; padding: 12px 18px; font-size: 15px; font-weight: 800;
+  cursor: pointer; user-select: none; touch-action: manipulation;
+}
+.touch-btn:active { background: var(--cyan); color: #040817; border-color: var(--cyan); }
+.touch-btn.act { background: #6b21a8; border-color: #9333ea; }
+.touch-btn.act:active { background: #ff2a85; }
+
+/* Global DOM Game Styles */
+.dom-grid { display: grid; gap: 8px; justify-content: center; margin: 10px auto; }
+.dom-cell {
+  background: #141b3a; border: 2px solid #293466; border-radius: 10px;
+  color: #fff; font-size: 26px; font-weight: 900; display: grid;
+  place-items: center; cursor: pointer; transition: all .15s;
+}
+.dom-cell:hover:not(:disabled) { border-color: var(--cyan); background: #1c2652; }
+.dom-btn-panel { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+
+/* Responsive adjustments */
+@media (max-width: 650px) {
+  header { padding: 12px 16px; }
+  .hero { padding: 26px 18px; }
+  .arena-box { border-radius: 0; max-height: 100vh; height: 100vh; }
+  .arena-stage { max-height: calc(100vh - 200px); }
+  .touch-btn { padding: 10px 14px; font-size: 13px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <a href="#" class="brand">
+    <div class="brand-icon">⚡</div>
+    <div>GAME<span>VERSE</span></div>
+  </a>
+  <div class="nav-tools">
+    <button class="nav-btn active" id="audio-toggle">
+      <span id="audio-icon">🔊</span> FX: ON
+    </button>
+  </div>
+</header>
+
+<main>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-tag">✦ ZERO LAG • PURE WEB RETRO ENGINE</div>
+    <h1>PLAY 24+ GAMES<br><span style="color:var(--cyan);text-shadow:0 0 20px var(--cyan-glow);">BEYOND LIMITS.</span></h1>
+    <p>Hand-crafted retro & cyber arcade challenges. Complete level goals, climb ranks, and beat your best records directly in your browser.</p>
+    <div class="hero-stats">
+      <div class="stat-pill">GAMES READY: <span id="stat-count">24</span></div>
+      <div class="stat-pill">LEVEL PROGRESSION: <span>MULTI-TIER</span></div>
+      <div class="stat-pill">PLATFORM: <span>GITHUB PAGES READY</span></div>
+    </div>
+  </section>
+
+  <!-- Controls Bar -->
+  <section class="catalog-head">
+    <div class="cat-filters" id="cat-filters">
+      <button class="filter-btn active" data-cat="All">All Games</button>
+      <button class="filter-btn" data-cat="Arcade">Arcade</button>
+      <button class="filter-btn" data-cat="Action">Action</button>
+      <button class="filter-btn" data-cat="Puzzle">Puzzle</button>
+      <button class="filter-btn" data-cat="Racing">Racing</button>
+      <button class="filter-btn" data-cat="Favorites">♥ Favorites</button>
+    </div>
+    <div class="search-box">
+      <span>🔍</span>
+      <input type="text" id="game-search" placeholder="Search 24+ arcade games..." aria-label="Search games">
+    </div>
+  </section>
+
+  <!-- Game Cards Grid -->
+  <div class="game-grid" id="game-grid"></div>
+</main>
+
+<!-- ========================================================
+     IN-GAME ARENA MODAL
+======================================================== -->
+<div class="arena-overlay" id="arena-overlay">
+  <div class="arena-box">
+    <!-- Header -->
+    <div class="arena-bar">
+      <div class="arena-info">
+        <span class="arena-badge-icon" id="ar-icon">⭕</span>
+        <div>
+          <div class="arena-name" id="ar-name">Game Title</div>
+          <div class="arena-sub" id="ar-sub">PUZZLE • TIER 1</div>
+        </div>
+      </div>
+      <div class="arena-hud">
+        <div class="hud-item">LVL: <span class="hud-val" id="ar-level">1</span></div>
+        <div class="hud-item">PTS: <span class="hud-val sc" id="ar-score">0</span></div>
+        <div class="hud-item">BEST: <span class="hud-val hi" id="ar-high">0</span></div>
+      </div>
+      <div class="arena-actions">
+        <button class="arena-btn" id="ar-restart">↻ Restart</button>
+        <button class="arena-btn arena-close" id="ar-close">✕</button>
+      </div>
+    </div>
+
+    <!-- Levels Selector Strip -->
+    <div class="arena-levels-strip">
+      <span class="level-strip-label">Select Level:</span>
+      <div class="level-tabs" id="level-tabs"></div>
+    </div>
+
+    <!-- Active Game Playground -->
+    <div class="arena-stage" id="arena-stage"></div>
+    <div class="game-hud-msg" id="arena-msg">Press start or use controls!</div>
+
+    <!-- Touch Pad Buttons -->
+    <div class="mobile-controls" id="touch-controls">
+      <button class="touch-btn" id="tb-left">◀</button>
+      <button class="touch-btn" id="tb-up">▲</button>
+      <button class="touch-btn" id="tb-down">▼</button>
+      <button class="touch-btn" id="tb-right">▶</button>
+      <button class="touch-btn act" id="tb-act">ACTION</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ========================================================
+   1. SOUND FX ENGINE (WEB AUDIO API)
+======================================================== */
+class RetroSound {
+  constructor() {
+    this.ctx = null;
+    this.enabled = true;
+  }
+  init() {
+    if (!this.ctx) {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (AC) this.ctx = new AC();
+    }
+    if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume();
+  }
+  tone(freq, type = 'sine', duration = 0.1, gainVal = 0.15) {
+    if (!this.enabled) return;
+    this.init();
+    if (!this.ctx) return;
+    try {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+      gain.gain.setValueAtTime(gainVal, this.ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + duration);
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start();
+      osc.stop(this.ctx.currentTime + duration);
+    } catch (_) {}
+  }
+  click() { this.tone(480, 'square', 0.04, 0.08); }
+  point() { this.tone(587, 'sine', 0.08, 0.12); setTimeout(() => this.tone(880, 'sine', 0.1, 0.12), 60); }
+  jump() { this.tone(340, 'triangle', 0.12, 0.15); }
+  laser() {
+    if (!this.enabled) return;
+    this.init();
+    if (!this.ctx) return;
+    try {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(800, this.ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(100, this.ctx.currentTime + 0.12);
+      gain.gain.setValueAtTime(0.12, this.ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.12);
+      osc.connect(gain); gain.connect(this.ctx.destination);
+      osc.start(); osc.stop(this.ctx.currentTime + 0.12);
+    } catch (_) {}
+  }
+  explode() {
+    if (!this.enabled) return;
+    this.init();
+    if (!this.ctx) return;
+    try {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(130, this.ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(30, this.ctx.currentTime + 0.28);
+      gain.gain.setValueAtTime(0.25, this.ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.28);
+      osc.connect(gain); gain.connect(this.ctx.destination);
+      osc.start(); osc.stop(this.ctx.currentTime + 0.28);
+    } catch (_) {}
+  }
+  win() {
+    [523, 659, 784, 1046].forEach((f, i) => setTimeout(() => this.tone(f, 'triangle', 0.18, 0.15), i * 90));
+  }
+}
+const sfx = new RetroSound();
+
+// Audio button toggle
+const audioToggleBtn = document.getElementById('audio-toggle');
+audioToggleBtn.addEventListener('click', () => {
+  sfx.init();
+  sfx.enabled = !sfx.enabled;
+  audioToggleBtn.classList.toggle('active', sfx.enabled);
+  audioToggleBtn.innerHTML = `<span>${sfx.enabled ? '🔊' : '🔇'}</span> FX: ${sfx.enabled ? 'ON' : 'OFF'}`;
+});
+
+/* ========================================================
+   2. GAME DEFINITIONS (24 ENTIRELY PLAYABLE MINI-GAMES)
+======================================================== */
+const GAME_DATABASE = [
+  { id: 1, name: "Tic-Tac-Toe Cyber", cat: "Puzzle", icon: "⭕", maxLevel: 5, desc: "Classic & 4x4 matrix duel against escalating AI engines." },
+  { id: 2, name: "Memory Match", cat: "Puzzle", icon: "🧠", maxLevel: 5, desc: "Pairs card memory matching with shrinking timers and grid scales." },
+  { id: 3, name: "Space Adventure", cat: "Action", icon: "🚀", maxLevel: 10, desc: "Retro starfighter blast waves, asteroids, and deadly alien lasers." },
+  { id: 4, name: "Speed Racer", cat: "Racing", icon: "🏎️", maxLevel: 10, desc: "High-octane neon highway run dodging dense traffic and hazards." },
+  { id: 5, name: "Neon Blocks", cat: "Arcade", icon: "🟪", maxLevel: 15, desc: "Tetris block stacking with increasing gravity drops and lines goals." },
+  { id: 6, name: "Brain Quest Math", cat: "Puzzle", icon: "💎", maxLevel: 8, desc: "Fast arithmetic math sprint before countdown bar runs out." },
+  { id: 7, name: "Ninja Dash", cat: "Action", icon: "🥷", maxLevel: 10, desc: "Rooftop runner with double jump mechanics and razor shurikens." },
+  { id: 8, name: "Turbo Drift", cat: "Racing", icon: "🏁", maxLevel: 5, desc: "Drift hairpin turns, maintain centrifugal momentum, and hit checkpoints." },
+  { id: 9, name: "Snake Cyber Glitch", cat: "Arcade", icon: "🐍", maxLevel: 8, desc: "Grow data snake, avoid glitch walls, and hit target scores." },
+  { id: 10, name: "Brick Breaker Neon", cat: "Arcade", icon: "🧱", maxLevel: 10, desc: "Bounce laser balls to shatter armored neon block patterns." },
+  { id: 11, name: "Flappy Cyber Droid", cat: "Action", icon: "🛸", maxLevel: 5, desc: "Guide gravity thruster drone across laser pipe gateways." },
+  { id: 12, name: "Pong Retro AI", cat: "Arcade", icon: "🏓", maxLevel: 5, desc: "Paddle reflex duel with spin velocity and shrinking pads." },
+  { id: 13, name: "Minesweeper 2099", cat: "Puzzle", icon: "💣", maxLevel: 4, desc: "Tactical minefield clearance from 8x8 patrol to 14x14 defense grid." },
+  { id: 14, name: "Simon Matrix", cat: "Puzzle", icon: "🔔", maxLevel: 15, desc: "Replicate escalating neon frequency note and color chains." },
+  { id: 15, name: "Whack-A-Mole Cyber", cat: "Action", icon: "👾", maxLevel: 8, desc: "Zap glitch viruses popping out of matrix portals before decoy traps." },
+  { id: 16, name: "Asteroid Dodge 360", cat: "Action", icon: "☄️", maxLevel: 10, desc: "Thrust ship with rotational inertia, splitting giant rocks." },
+  { id: 17, name: "Color Match Reflex", cat: "Puzzle", icon: "🎨", maxLevel: 6, desc: "Stroop reflex test: verify font colors against semantic text." },
+  { id: 18, name: "Tower Stacker 3D", cat: "Arcade", icon: "🏢", maxLevel: 10, desc: "Time falling neon platforms. Any overhang slice is trimmed off!" },
+  { id: 19, name: "2048 Neon Fusion", cat: "Puzzle", icon: "🔢", maxLevel: 4, desc: "Slide and merge matching cyber tiles to reach 512, 1024, 2048+." },
+  { id: 20, name: "Knife Throw Orbit", cat: "Action", icon: "🗡️", maxLevel: 8, desc: "Launch blades into a spinning cyber wheel without colliding." },
+  { id: 21, name: "Connect Four Neon", cat: "Puzzle", icon: "🔴", maxLevel: 4, desc: "Drop chips to connect 4 in a row against an adaptive AI." },
+  { id: 22, name: "Lunar Lander Physics", cat: "Action", icon: "🌕", maxLevel: 5, desc: "Conserve thruster fuel and touch down gently on designated platforms." },
+  { id: 23, name: "Cross Cyber Road", cat: "Arcade", icon: "🐸", maxLevel: 8, desc: "Frogger cyber sprint through hover traffic and floating plasma logs." },
+  { id: 24, name: "Typing Hack Terminal", cat: "Action", icon: "⌨️", maxLevel: 10, desc: "Intercept decrypt words falling toward security firewall before breach." }
+];
+
+/* Storage helpers */
+let favorites = new Set();
+try { favorites = new Set(JSON.parse(localStorage.getItem("gv_favs") || "[]")); } catch(_) {}
+function saveFavs() { try { localStorage.setItem("gv_favs", JSON.stringify([...favorites])); } catch(_) {} }
+function getHi(id) { return Number(localStorage.getItem(`gv_hi_${id}`) || 0); }
+function setHi(id, val) {
+  if (val > getHi(id)) {
+    localStorage.setItem(`gv_hi_${id}`, val);
+    sfx.win();
+    renderCards();
+    return true;
+  }
+  return false;
+}
+
+/* ========================================================
+   3. CATALOG RENDERING & FILTERING
+======================================================== */
+const gridEl = document.getElementById("game-grid");
+const searchInput = document.getElementById("game-search");
+let currentCat = "All";
+
+function renderCards() {
+  const query = searchInput.value.trim().toLowerCase();
+  const list = GAME_DATABASE.filter(g => {
+    const matchCat = (currentCat === "All") || (currentCat === "Favorites" ? favorites.has(g.id) : g.cat === currentCat);
+    const matchQ = g.name.toLowerCase().includes(query) || g.desc.toLowerCase().includes(query) || g.cat.toLowerCase().includes(query);
+    return matchCat && matchQ;
+  });
+
+  if (list.length === 0) {
+    gridEl.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--muted);background:var(--bg-card);border-radius:16px;">No games match your query. Try another keyword or filter!</div>`;
+    return;
+  }
+
+  gridEl.innerHTML = list.map(g => {
+    const isFav = favorites.has(g.id);
+    const hi = getHi(g.id);
+    return `
+      <div class="game-card">
+        <div class="card-thumb">
+          ${g.icon}
+          <div class="card-level-badge">LVL 1-${g.maxLevel}</div>
+          <button class="card-fav-btn ${isFav ? 'active' : ''}" data-fav="${g.id}">${isFav ? '♥' : '♡'}</button>
+        </div>
+        <div class="card-content">
+          <span class="card-category">${g.cat}</span>
+          <h3>${g.name}</h3>
+          <p>${g.desc}</p>
+          <div class="card-footer">
+            <span class="card-high">BEST: ${hi}</span>
+            <button class="play-card-btn" data-play="${g.id}">▶ PLAY</button>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+document.getElementById("cat-filters").addEventListener("click", e => {
+  const btn = e.target.closest("[data-cat]");
+  if (!btn) return;
+  sfx.click();
+  currentCat = btn.dataset.cat;
+  document.querySelectorAll(".filter-btn").forEach(b => b.classList.toggle("active", b === btn));
+  renderCards();
+});
+searchInput.addEventListener("input", renderCards);
+
+document.addEventListener("click", e => {
+  const favBtn = e.target.closest("[data-fav]");
+  if (favBtn) {
+    sfx.click();
+    const id = Number(favBtn.dataset.fav);
+    favorites.has(id) ? favorites.delete(id) : favorites.add(id);
+    saveFavs();
+    renderCards();
+    return;
+  }
+  const playBtn = e.target.closest("[data-play]");
+  if (playBtn) {
+    sfx.click();
+    openArena(Number(playBtn.dataset.play));
+  }
+});
+
+/* ========================================================
+   4. ARENA SYSTEM & LEVEL MANAGER
+======================================================== */
+const overlay = document.getElementById("arena-overlay");
+const stage = document.getElementById("arena-stage");
+const levelTabs = document.getElementById("level-tabs");
+const msgEl = document.getElementById("arena-msg");
+let activeGame = null;
+let activeLevel = 1;
+let currentScore = 0;
+let animFrameId = null;
+let currentCleanup = null;
+
+// Touch buttons bindings
+const touchState = { left: false, up: false, down: false, right: false, act: false };
+function bindTouch(id, key) {
+  const btn = document.getElementById(id);
+  const press = (val) => {
+    touchState[key] = val;
+    if (val && window.onGameAction) window.onGameAction(key);
+  };
+  btn.addEventListener("pointerdown", (e) => { e.preventDefault(); press(true); });
+  btn.addEventListener("pointerup", (e) => { e.preventDefault(); press(false); });
+  btn.addEventListener("pointerleave", () => press(false));
+}
+bindTouch("tb-left", "left");
+bindTouch("tb-up", "up");
+bindTouch("tb-down", "down");
+bindTouch("tb-right", "right");
+bindTouch("tb-act", "act");
+
+function openArena(id, lvl = 1) {
+  activeGame = GAME_DATABASE.find(g => g.id === id);
+  activeLevel = lvl;
+  currentScore = 0;
+  overlay.classList.add("open");
+
+  document.getElementById("ar-icon").textContent = activeGame.icon;
+  document.getElementById("ar-name").textContent = activeGame.name;
+  document.getElementById("ar-sub").textContent = `${activeGame.cat.toUpperCase()} • TIER ${activeLevel}`;
+  document.getElementById("ar-level").textContent = activeLevel;
+  document.getElementById("ar-score").textContent = currentScore;
+  document.getElementById("ar-high").textContent = getHi(activeGame.id);
+
+  // Render Level selector tabs
+  levelTabs.innerHTML = "";
+  for (let l = 1; l <= activeGame.maxLevel; l++) {
+    const b = document.createElement("button");
+    b.className = `lvl-tab ${l === activeLevel ? 'active' : ''}`;
+    b.textContent = `Lvl ${l}`;
+    b.onclick = () => {
+      sfx.click();
+      openArena(activeGame.id, l);
+    };
+    levelTabs.appendChild(b);
+  }
+
+  loadActiveGameEngine();
+}
+
+function updateScore(pts) {
+  currentScore += pts;
+  document.getElementById("ar-score").textContent = currentScore;
+  setHi(activeGame.id, currentScore);
+  document.getElementById("ar-high").textContent = getHi(activeGame.id);
+}
+
+function levelCompleted(bonus = 100) {
+  sfx.win();
+  updateScore(bonus);
+  msgEl.textContent = `🎉 Level ${activeLevel} Complete!`;
+  if (activeLevel < activeGame.maxLevel) {
+    setTimeout(() => {
+      openArena(activeGame.id, activeLevel + 1);
+    }, 1100);
+  } else {
+    msgEl.textContent = `👑 Congratulations! Mastered all ${activeGame.maxLevel} levels!`;
+  }
+}
+
+function gameOver(text = "Game Over! Try again.") {
+  sfx.explode();
+  msgEl.textContent = text;
+}
+
+function closeArena() {
+  if (currentCleanup) { currentCleanup(); currentCleanup = null; }
+  if (animFrameId) { cancelAnimationFrame(animFrameId); animFrameId = null; }
+  window.onGameAction = null;
+  stage.innerHTML = "";
+  overlay.classList.remove("open");
+  renderCards();
+}
+
+document.getElementById("ar-close").onclick = closeArena;
+document.getElementById("ar-restart").onclick = () => {
+  sfx.click();
+  openArena(activeGame.id, activeLevel);
+};
+
+/* ========================================================
+   5. ALL 24 PLAYABLE GAME LOGICS
+======================================================== */
+function loadActiveGameEngine() {
+  if (currentCleanup) { currentCleanup(); currentCleanup = null; }
+  if (animFrameId) { cancelAnimationFrame(animFrameId); animFrameId = null; }
+  window.onGameAction = null;
+  stage.innerHTML = "";
+  msgEl.textContent = `Level ${activeLevel} initialized. Have fun!`;
+
+  const gid = activeGame.id;
+  switch (gid) {
+    case 1: initTicTacToe(); break;
+    case 2: initMemoryMatch(); break;
+    case 3: initSpaceShooter(); break;
+    case 4: initSpeedRacer(); break;
+    case 5: initNeonBlocks(); break;
+    case 6: initBrainQuest(); break;
+    case 7: initNinjaDash(); break;
+    case 8: initTurboDrift(); break;
+    case 9: initSnakeGlitch(); break;
+    case 10: initBrickBreaker(); break;
+    case 11: initFlappyDroid(); break;
+    case 12: initPong(); break;
+    case 13: initMinesweeper(); break;
+    case 14: initSimon(); break;
+    case 15: initWhackMole(); break;
+    case 16: initAsteroids(); break;
+    case 17: initColorMatch(); break;
+    case 18: initTowerStacker(); break;
+    case 19: init2048(); break;
+    case 20: initKnifeHit(); break;
+    case 21: initConnectFour(); break;
+    case 22: initLunarLander(); break;
+    case 23: initCrossRoad(); break;
+    case 24: initTypingHack(); break;
+  }
+}
+
+/* Helper canvas creator */
+function createCanvas(w = 400, h = 400) {
+  const c = document.createElement("canvas");
+  c.className = "game-canvas";
+  c.width = w; c.height = h;
+  stage.appendChild(c);
+  return { canvas: c, ctx: c.getContext("2d") };
+}
+
+/* ---------------- 1. TIC-TAC-TOE (AI Scaling & 4x4 on Level 5) ---------------- */
+function initTicTacToe() {
+  const size = activeLevel === 5 ? 4 : 3;
+  let cells = Array(size * size).fill("");
+  let turn = "X";
+  let active = true;
+
+  const grid = document.createElement("div");
+  grid.className = "dom-grid";
+  grid.style.gridTemplateColumns = `repeat(${size}, 70px)`;
+
+  function draw() {
+    grid.innerHTML = "";
+    cells.forEach((val, i) => {
+      const btn = document.createElement("button");
+      btn.className = "dom-cell";
+      btn.style.height = "70px";
+      btn.textContent = val;
+      if (val === "X") btn.style.color = "var(--cyan)";
+      if (val === "O") btn.style.color = "var(--pink)";
+      btn.onclick = () => makeMove(i);
+      grid.appendChild(btn);
+    });
+  }
+
+  function checkWin(p) {
+    const lines = [];
+    if (size === 3) {
+      lines.push([0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]);
+    } else {
+      // 4x4 lines
+      for (let r=0; r<4; r++) lines.push([r*4, r*4+1, r*4+2, r*4+3]);
+      for (let c=0; c<4; c++) lines.push([c, c+4, c+8, c+12]);
+      lines.push([0,5,10,15],[3,6,9,12]);
+    }
+    return lines.some(l => l.every(idx => cells[idx] === p));
+  }
+
+  function makeMove(i) {
+    if (!active || cells[i]) return;
+    cells[i] = turn;
+    sfx.point();
+    draw();
+
+    if (checkWin("X")) {
+      active = false;
+      levelCompleted(150);
+      return;
+    }
+    if (cells.every(Boolean)) {
+      active = false;
+      msgEl.textContent = "Draw game! Restart or retry.";
+      return;
+    }
+
+    turn = "O";
+    msgEl.textContent = "AI thinking...";
+    setTimeout(aiMove, 260);
+  }
+
+  function aiMove() {
+    if (!active) return;
+    const empties = cells.map((v, i) => v === "" ? i : null).filter(v => v !== null);
+    if (!empties.length) return;
+
+    let chosen = empties[0];
+    if (activeLevel >= 3) {
+      // Win or block
+      for (let e of empties) {
+        cells[e] = "O";
+        if (checkWin("O")) { chosen = e; cells[e]=""; break; }
+        cells[e] = "";
+      }
+      for (let e of empties) {
+        cells[e] = "X";
+        if (checkWin("X")) { chosen = e; cells[e]=""; break; }
+        cells[e] = "";
+      }
+    } else {
+      chosen = empties[Math.floor(Math.random() * empties.length)];
+    }
+
+    cells[chosen] = "O";
+    sfx.click();
+    draw();
+
+    if (checkWin("O")) {
+      active = false;
+      gameOver("Cyber AI won! Try again.");
+      return;
+    }
+    if (cells.every(Boolean)) {
+      active = false;
+      msgEl.textContent = "Draw! Try again.";
+      return;
+    }
+    turn = "X";
+    msgEl.textContent = "Your turn (X)!";
+  }
+
+  stage.appendChild(grid);
+  draw();
+}
+
+/* ---------------- 2. MEMORY MATCH (Scaling Grids & Countdown) ---------------- */
+function initMemoryMatch() {
+  const pairsCount = [4, 6, 8, 10, 12][activeLevel - 1];
+  const allIcons = ["🚀","👾","⚡","🔮","💎","🛡️","🔥","👑","🪐","🧩","🕹️","🛸"];
+  const deck = allIcons.slice(0, pairsCount);
+  const cards = [...deck, ...deck].sort(() => Math.random() - 0.5);
+  let flipped = [];
+  let matched = 0;
+  let timer = [30, 26, 22, 18, 15][activeLevel - 1];
+
+  const grid = document.createElement("div");
+  grid.className = "dom-grid";
+  const cols = pairsCount <= 6 ? 4 : (pairsCount <= 8 ? 4 : 6);
+  grid.style.gridTemplateColumns = `repeat(${cols}, 60px)`;
+
+  const interval = setInterval(() => {
+    timer--;
+    msgEl.textContent = `Match all pairs! Time left: ${timer}s`;
+    if (timer <= 0) {
+      clearInterval(interval);
+      gameOver("Time expired! Memory buffer overload.");
+    }
+  }, 1000);
+  currentCleanup = () => clearInterval(interval);
+
+  const cardEls = cards.map((icon, idx) => {
+    const el = document.createElement("button");
+    el.className = "dom-cell";
+    el.style.height = "60px";
+    el.style.fontSize = "22px";
+    el.textContent = "❓";
+    el.onclick = () => {
+      if (flipped.length >= 2 || el.textContent !== "❓" || timer <= 0) return;
+      sfx.click();
+      el.textContent = icon;
+      flipped.push({ idx, icon, el });
+      if (flipped.length === 2) {
+        if (flipped[0].icon === flipped[1].icon) {
+          sfx.point();
+          matched++;
+          updateScore(20);
+          flipped = [];
+          if (matched === pairsCount) {
+            clearInterval(interval);
+            levelCompleted(200);
+          }
+        } else {
+          setTimeout(() => {
+            flipped.forEach(f => f.el.textContent = "❓");
+            flipped = [];
+          }, 600);
+        }
+      }
+    };
+    grid.appendChild(el);
+    return el;
+  });
+
+  stage.appendChild(grid);
+}
+
+/* ---------------- 3. SPACE ADVENTURE SHOOTER ---------------- */
+function initSpaceShooter() {
+  const { canvas, ctx } = createCanvas(380, 400);
+  let ship = { x: 175, y: 350, w: 28, h: 28, speed: 6 };
+  let lasers = [];
+  let enemies = [];
+  let targetKills = 10 + activeLevel * 3;
+  let kills = 0;
+  let spawnDelay = Math.max(800 - activeLevel * 50, 250);
+  let lastSpawn = 0;
+
+  window.onGameAction = (key) => {
+    if (key === 'act') {
+      sfx.laser();
+      lasers.push({ x: ship.x + ship.w / 2, y: ship.y });
+    }
+  };
+
+  const keyHandler = (e) => {
+    if (e.code === 'Space') { e.preventDefault(); window.onGameAction('act'); }
+  };
+  window.addEventListener('keydown', keyHandler);
+  currentCleanup = () => window.removeEventListener('keydown', keyHandler);
+
+  function loop(time) {
+    ctx.fillStyle = "#050713";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    if (touchState.left) ship.x = Math.max(10, ship.x - ship.speed);
+    if (touchState.right) ship.x = Math.min(canvas.width - ship.w - 10, ship.x + ship.speed);
+
+    // Ship
+    ctx.fillStyle = "var(--cyan)";
+    ctx.beginPath();
+    ctx.moveTo(ship.x + ship.w / 2, ship.y);
+    ctx.lineTo(ship.x + ship.w, ship.y + ship.h);
+    ctx.lineTo(ship.x, ship.y + ship.h);
+    ctx.fill();
+
+    // Lasers
+    ctx.fillStyle = "#ff2a85";
+    for (let i = lasers.length - 1; i >= 0; i--) {
+      lasers[i].y -= 9;
+      ctx.fillRect(lasers[i].x - 2, lasers[i].y, 4, 12);
+      if (lasers[i].y < -10) lasers.splice(i, 1);
+    }
+
+    // Spawn
+    if (time - lastSpawn > spawnDelay) {
+      lastSpawn = time;
+      enemies.push({
+        x: Math.random() * (canvas.width - 30) + 15,
+        y: -20,
+        r: 12 + Math.random() * 6,
+        vy: 2 + activeLevel * 0.4
+      });
+    }
+
+    // Update enemies
+    ctx.fillStyle = "#9d4edd";
+    for (let i = enemies.length - 1; i >= 0; i--) {
+      const e = enemies[i];
+      e.y += e.vy;
+      ctx.beginPath();
+      ctx.arc(e.x, e.y, e.r, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Hit
+      for (let j = lasers.length - 1; j >= 0; j--) {
+        if (Math.hypot(e.x - lasers[j].x, e.y - lasers[j].y) < e.r + 4) {
+          sfx.point();
+          enemies.splice(i, 1);
+          lasers.splice(j, 1);
+          kills++;
+          updateScore(25);
+          msgEl.textContent = `Targets destroyed: ${kills}/${targetKills}`;
+          if (kills >= targetKills) {
+            levelCompleted(250);
+            return;
+          }
+          break;
+        }
+      }
+
+      if (e && Math.hypot(e.x - (ship.x + ship.w / 2), e.y - (ship.y + ship.h / 2)) < e.r + 14) {
+        gameOver("Ship obliterated in asteroid collision!");
+        return;
+      }
+      if (e && e.y > canvas.height + 30) enemies.splice(i, 1);
+    }
+
+    animFrameId = requestAnimationFrame(loop);
+  }
+  animFrameId = requestAnimationFrame(loop);
+}
+
+/* ---------------- 4. SPEED RACER ---------------- */
+function initSpeedRacer() {
+  const { canvas, ctx } = createCanvas(340, 400);
+  const lanes = [65, 170, 275];
+  let curLane = 1;
+  let enemies = [];
+  let nextSpawn = 0;
+  let dodged = 0;
+  let target = 10 + activeLevel * 3;
+  let speed = 4 + activeLevel * 0.6;
+
+  window.onGameAction = (key) => {
+    if (key === 'left' && curLane > 0) { curLane--; sfx.click(); }
+    if (key === 'right' && curLane < 2) { curLane++; sfx.click(); }
+  };
+
+  const keyHandler = (e) => {
+    if (e.key === "ArrowLeft" || e.key === "a") window.onGameAction('left');
+    if (e.key === "ArrowRight" || e.key === "d") window.onGameAction('right');
+  };
+  window.addEventListener('keydown', keyHandler);
+  currentCleanup = () => window.removeEventListener('keydown', keyHandler);
+
+  function loop(time) {
+    ctx.fillStyle = "#090d1c";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Road Lines
+    ctx.strokeStyle = "#222c54";
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.moveTo(115, 0); ctx.lineTo(115, canvas.height);
+    ctx.moveTo(225, 0); ctx.lineTo(225, canvas.height);
+    ctx.stroke();
+
+    // Player car
+    const px = lanes[curLane];
+    ctx.fillStyle = "var(--cyan)";
+    ctx.fillRect(px - 18, 310, 36, 58);
+
+    if (time - nextSpawn > Math.max(1000 - activeLevel * 60, 350)) {
+      nextSpawn = time;
+      enemies.push({ lane: Math.floor(Math.random() * 3), y: -60, color: "#ff2a85" });
+    }
+
+    for (let i = enemies.length - 1; i >= 0; i--) {
+      const e = enemies[i];
+      e.y += speed;
+      ctx.fillStyle = e.color;
+      ctx.fillRect(lanes[e.lane] - 18, e.y, 36, 58);
+
+      if (e.lane === curLane && e.y + 58 > 310 && e.y < 368) {
+        gameOver("Traffic collision! Vehicle totaled.");
+        return;
+      }
+      if (e.y > canvas.height + 60) {
+        enemies.splice(i, 1);
+        dodged++;
+        updateScore(20);
+        msgEl.textContent = `Dodged vehicles: ${dodged}/${target}`;
+        if (dodged >= target) {
+          levelCompleted(300);
+          return;
+        }
+      }
+    }
+    animFrameId = requestAnimationFrame(loop);
+  }
+  animFrameId = requestAnimationFrame(loop);
+}
+
+/* ---------------- 5. NEON BLOCKS (TETRIS ENGINE) ---------------- */
+function initNeonBlocks() {
+  const { canvas, ctx } = createCanvas(280, 400);
+  const COLS = 10, ROWS = 16, BS = 24;
+  let grid = Array.from({ length: ROWS }, () => Array(COLS).fill(0));
+  let linesCleared = 0;
+  let targetLines = 2 + activeLevel;
+  let dropInterval = Math.max(650 - activeLevel * 35, 120);
+  let lastDrop = 0;
+
+  const PIECES = [
+    { s: [[1,1,1,1]], c: "#00f2fe" },
+    { s: [[1,1],[1,1]], c: "#facc15" },
+    { s: [[0,1,0],[1,1,1]], c: "#9d4edd" },
+    { s: [[1,0,0],[1,1,1]], c: "#3b82f6" },
+    { s: [[1,1,0],[0,1,1]], c: "#10b981" }
+  ];
+
+  let cur = null;
+  function spawn() {
+    const p = PIECES[Math.floor(Math.random() * PIECES.length)];
+    cur = { s: p.s, c: p.c, x: 3, y: 0 };
+    if (collides(cur.x, cur.y, cur.s)) {
+      gameOver("Matrix blocked! Overloaded.");
+    }
+  }
+
+  function collides(x, y, s) {
+    for (let r=0; r<s.length; r++) {
+      for (let c=0; c<s[r].length; c++) {
+        if (s[r][c]) {
+          const nx = x + c, ny = y + r;
+          if (nx < 0 || nx >= COLS || ny >= ROWS) return true;
+          if (ny >= 0 && grid[ny][nx]) return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  function rotate() {
+    if (!cur) return;
+    const rot = cur.s[0].map((_, i) => cur.s.map(row => row[i]).reverse());
+    if (!collides(cur.x, cur.y, rot)) cur.s = rot;
+  }
+
+  window.onGameAction = (key) => {
+    if (!cur) return;
+    if (key === 'left' && !collides(cur.x - 1, cur.y, cur.s)) cur.x--;
+    if (key === 'right' && !collides(cur.x + 1, cur.y, cur.s)) cur.x++;
+    if (key === 'up' || key === 'act') rotate();
+    if (key === 'down' && !collides(cur.x, cur.y + 1, cur.s)) cur.y++;
+  };
+
+  const keyHandler = (e) => {
+    if (e.key === "ArrowLeft") window.onGameAction('left');
+    if (e.key === "ArrowRight") window.onGameAction('right');
+    if (e.key === "ArrowUp") window.onGameAction('up');
+    if (e.key === "ArrowDown") window.onGameAction('down');
+  };
+  window.addEventListener('keydown', keyHandler);
+  currentCleanup = () => window.removeEventListener('keydown', keyHandler);
+
+  spawn();
+  function loop(time) {
+    ctx.fillStyle = "#060914";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    const ox = 20, oy = 8;
+    if (time - lastDrop > dropInterval) {
+      lastDrop = time;
+      if (cur) {
+        if (!collides(cur.x, cur.y + 1, cur.s)) {
+          cur.y++;
+        } else {
+          // Lock
+          for (let r=0; r<cur.s.length; r++) {
+            for (let c=0; c<cur.s[r].length; c++) {
+              if (cur.s[r][c] && cur.y + r >= 0) grid[cur.y + r][cur.x + c] = cur.c;
+            }
+          }
+          // Clear lines
+          let cl = 0;
+          for (let r=ROWS-1; r>=0; r--) {
+            if (grid[r].every(v => v !== 0)) {
+              grid.splice(r, 1);
+              grid.unshift(Array(COLS).fill(0));
+              cl++; r++;
+            }
+          }
+          if (cl > 0) {
+            linesCleared += cl;
+            sfx.point();
+            updateScore(cl * 100);
+            msgEl.textContent = `Lines: ${linesCleared}/${targetLines}`;
+            if (linesCleared >= targetLines) {
+              levelCompleted(350);
+              return;
+            }
+          }
+          spawn();
+        }
+      }
+    }
+
+    // Draw board
+    for (let r=0; r<ROWS; r++) {
+      for (let c=0; c<COLS; c++) {
+        if (grid[r][c]) {
+          ctx.fillStyle = grid[r][c];
+          ctx.fillRect(ox + c*BS, oy + r*BS, BS-1, BS-1);
+        }
+      }
+    }
+    // Draw cur
+    if (cur) {
+      ctx.fillStyle = cur.c;
+      for (let r=0; r<cur.s.length; r++) {
+        for (let c=0; c<cur.s[r].length; c++) {
+          if (cur.s[r][c]) ctx.fillRect(ox + (cur.x+c)*BS, oy + (cur.y+r)*BS, BS-1, BS-1);
+        }
+      }
+    }
+    animFrameId = requestAnimationFrame(loop);
+  }
+  animFrameId = requestAnimationFrame(loop);
+}
+
+/* ---------------- 6. BRAIN QUEST MATH BLITZ ---------------- */
+function initBrainQuest() {
+  let solved = 0;
+  const target = 4 + activeLevel;
+  let timer = Math.max(9 - activeLevel * 0.7, 3);
+  let timerInterval = null;
+
+  const box = document.createElement("div");
+  box.style.textAlign = "center";
+
+  const qEl = document.createElement("div");
+  qEl.style.fontSize = "34px";
+  qEl.style.fontWeight = "800";
+  qEl.style.margin = "20px 0";
+  box.appendChild(qEl);
+
+  const optsEl = document.createElement("div");
+  optsEl.className = "dom-btn-panel";
+  box.appendChild(optsEl);
+
+  function nextQ() {
+    clearInterval(timerInterval);
+    if (solved >= target) {
+      levelCompleted(200);
+      return;
+    }
+
+    const ops = activeLevel <= 2 ? ['+'] : (activeLevel <= 5 ? ['+','-'] : ['+','-','*']);
+    const op = ops[Math.floor(Math.random() * ops.length)];
+    let a = Math.floor(Math.random() * (10 * activeLevel)) + 2;
+    let b = Math.floor(Math.random() * (8 * activeLevel)) + 2;
+    let ans = op === '+' ? a+b : (op === '-' ? a-b : a*b);
+    qEl.textContent = `${a} ${op} ${b} = ?`;
+
+    const set = new Set([ans]);
+    while (set.size < 4) set.add(ans + (Math.random() > 0.5 ? 1 : -1) * (Math.floor(Math.random() * 6) + 1));
+    const choices = [...set].sort(() => Math.random() - 0.5);
+
+    optsEl.innerHTML = "";
+    choices.forEach(val => {
+      const b = document.createElement("button");
+      b.className = "dom-cell";
+      b.style.padding = "10px 24px";
+      b.style.fontSize = "18px";
+      b.textContent = val;
+      b.onclick = () => {
+        if (val === ans) {
+          sfx.point();
+          solved++;
+          updateScore(25);
+          nextQ();
+        } else {
+          gameOver("Incorrect calculation! Reflex failure.");
+        }
+      };
+      optsEl.appendChild(b);
+    });
+
+    let rem = timer;
+    msgEl.textContent = `Progress: ${solved}/${target} • Timer: ${rem.toFixed(1)}s`;
+    timerInterval = setInterval(() => {
+      rem -= 0.1;
+      msgEl.textContent = `Progress: ${solved}/${target} • Timer: ${Math.max(0, rem).toFixed(1)}s`;
+      if (rem <= 0) {
+        clearInterval(timerInterval);
+        gameOver("Time ran out!");
+      }
+    }, 100);
+  }
+
+  currentCleanup = () => clearInterval(timerInterval);
+  stage.appendChild(box);
+  nextQ();
+}
+
+/* ---------------- 7. NINJA DASH ROOFTOP RUNNER ---------------- */
+function initNinjaDash() {
+  const { canvas, ctx } = createCanvas(400, 340);
+  let ninja = { x: 50, y: 220, w: 24, h: 32, vy: 0, jumps: 0 };
+  let shurikens = [];
+  let dodged = 0;
+  let target = 8 + activeLevel * 2;
+  let groundY = 260;
+  let nextShur = 0;
+
+  function jump() {
+    if (ninja.jumps < 2) {
+      sfx.jump();
+      ninja.vy = -10.5;
+      ninja.jumps++;
+    }
+  }
+  window.onGameAction = (key) => { if (key === 'up' || key === 'act') jump(); };
+  window.addEventListener('keydown', (e) => { if (e.code === 'Space' || e.key === 'ArrowUp') jump(); });
+
+  function loop(time) {
+    ctx.fillStyle = "#080c1e";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Floor
+    ctx.fillStyle = "#1e2444";
+    ctx.fillRect(0, groundY, canvas.width, canvas.height - groundY);
+
+    // Physics
+    ninja.vy += 0.55;
+    ninja.y += ninja.vy;
+    if (ninja.y >= groundY - ninja.h) {
+      ninja.y = groundY - ninja.h;
+      ninja.vy = 0;
+      ninja.jumps = 0;
+    }
+
+    // Ninja
+    ctx.fillStyle = "#ff2a85";
+    ctx.fillRect(ninja.x, ninja.y, ninja.w, ninja.h);
+
+    if (time - nextShur > Math.max(1400 - activeLevel * 90, 450)) {
+      nextShur = time;
+      shurikens.push({ x: canvas.width + 20, y: groundY - 18, r: 10, speed: 4.5 + activeLevel * 0.5 });
+    }
+
+    for (let i = shurikens.length - 1; i >= 0; i--) {
+      const s = shurikens[i];
+      s.x -= s.speed;
+      ctx.fillStyle = "var(--cyan)";
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fill();
+
+      if (Math.hypot(s.x - (ninja.x + 12), s.y - (ninja.y + 16)) < s.r + 12) {
+        gameOver("Struck by ninja blade!");
+        return;
+      }
+      if (s.x < -20) {
+        shurikens.splice(i, 1);
+        dodged++;
+        sfx.point();
+        updateScore(20);
+        msgEl.textContent = `Blades cleared: ${dodged}/${target}`;
+        if (dodged >= target) {
+          levelCompleted(300);
+          return;
+        }
+      }
+    }
+    animFrameId = requestAnimationFrame(loop);
+  }
+  animFrameId = requestAnimationFrame(loop);
+}
+
+/* ---------------- 8. TURBO DRIFT ---------------- */
+function initTurboDrift() {
+  const { canvas, ctx } = createCanvas(380, 380);
+  let car = { x: 190, y: 190, a: 0, v: 0 };
+  let gems = [];
+  let collected = 0;
+  let target = 5 + activeLevel * 2;
+
+  for (let i = 0; i < target; i++) {
+    gems.push({ x: 30 + Math.random() * 320, y: 30 + Math.random() * 320 });
+  }
+
+  function loop() {
+    ctx.fillStyle = "rgba(7, 10, 24, 0.25)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    if (touchState.left) car.a -= 0.08;
+    if (touchState.right) car.a += 0.08;
+    if (touchState.up || touchState.act) car.v = Math.min(car.v + 0.16, 4 + activeLevel * 0.4);
+    else car.v *= 0.95;
+
+    car.x += Math.cos(car.a) * car.v;
+    car.y += Math.sin(car.a) * car.v;
+
+    // Screen wrap
+    if (car.x < 0) car.x = canvas.width;
+    if (car.x > canvas.width) car.x = 0;
+    if (car.y < 0) car.y = canvas.height;
+    if (car.y > canvas.height) car.y = 0;
+
+    // Gems
+    ctx.fillStyle = "var(--gold)";
+    for (let i = gems.length - 1; i >= 0; i--) {
+      ctx.fillRect(gems[i].x - 6, gems[i].y - 6, 12, 12);
+      if (Math.hypot(gems[i].x - car.x, gems[i].y - car.y) < 16) {
+        sfx.point();
+        gems.splice(i, 1);
+        collected++;
+        updateScore(30);
+        msgEl.textContent = `Energy cells: ${collected}/${target}`;
+        if (collected >= target) {
+          levelCompleted(350);
+          return;
+        }
+      }
+    }
+
+    // Car
+    ctx.save();
+    ctx.translate(car.x, car.y);
+    ctx.rotate(car.a);
+    ctx.fillStyle = "var(--cyan)";
+    ctx.fillRect(-12, -7, 24, 14);
+    ctx.restore();
+
+    animFrameId = requestAnimationFrame(loop);
+  }
+  animFrameId = requestAnimationFrame(loop);
+}
+
+/* ---------------- 9. SNAKE CYBER GLITCH ---------------- */
+function initSnakeGlitch() {
+  const { canvas, ctx } = createCanvas(360, 360);
+  const GS = 18;
+  const TC = 20;
+  let snake = [{ x: 10, y: 10 }];
+  let dir = { x: 1, y: 0 };
+  let food = { x: 5, y: 5 };
+  let eaten = 0;
+  let target = 5 + activeLevel * 2;
+  let lastTick = 0;
+  let tickRate = Math.max(160 - activeLevel * 14, 60);
+
+  window.onGameAction = (key) => {
+    if (key === 'left' && dir.x === 0) dir = { x: -1, y: 0 };
+    if (key === 'right' && dir.x === 0) dir = { x: 1, y: 0 };
+    if (key === 'up' && dir.y === 0) dir = { x: 0, y: -1 };
+    if (key === 'down' && dir.y === 0) dir = { x: 0, y: 1 };
+  };
+
+  function loop(time) {
+    if (time - lastTick > tickRate) {
+      lastTick = time;
+      const head = { x: snake[0].x + dir.x, y: snake[0].y + dir.y };
+      if (head.x < 0 || head.x >= TC || head.y < 0 || head.y >= TC || snake.some(s => s.x === head.x && s.y === head.y)) {
+        gameOver("Matrix loop self-collision!");
+        return;
+      }
+      snake.unshift(head);
+      if (head.x === food.x && head.y === food.y) {
+        sfx.point();
+        eaten++;
+        updateScore(25);
+        food = { x: Math.floor(Math.random() * TC), y: Math.floor(Math.random() * TC) };
+        msgEl.textContent = `Data packets: ${eaten}/${target}`;
+        if (eaten >= target) {
+          levelCompleted(300);
+          return;
+        }
+      } else {
+        snake.pop();
+      }
+    }
+
+    ctx.fillStyle = "#050814";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = "#ff2a85";
+    ctx.fillRect(food.x * GS, food.y * GS, GS - 2, GS - 2);
+
+    ctx.fillStyle = "var(--cyan)";
+    snake.forEach(s => ctx.fillRect(s.x * GS, s.y * GS, GS - 2, GS - 2));
+
+    animFrameId = requestAnimationFrame(loop);
+  }
+  animFrameId = requestAnimationFrame(loop);
+}
+
+/* ---------------- 10. BRICK BREAKER NEON ---------------- */
+function initBrickBreaker() {
+  const { canvas, ctx } = createCanvas(360, 400);
+  let pad = { x: 140, w: Math.max(90 - activeLevel * 5, 50), h: 10, speed: 6 };
+  let ball = { x: 180, y: 260, vx: 3.5, vy: -3.5, r: 6 };
+  let bricks = [];
+  const rows = 3 + Math.min(activeLevel, 4);
+  const cols = 6;
+
+  for (let r=0; r<rows; r++) {
+    for (let c=0; c<cols; c++) {
+      bricks.push({ x: 25 + c * 52, y: 30 + r * 22, w: 48, h: 16, alive: true });
+    }
+  }
+
+  function loop() {
+    ctx.fillStyle = "#050713";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    if (touchState.left) pad.x = Math.max(10, pad.x - pad.speed);
+    if (touchState.right) pad.x = Math.min(canvas.width - pad.w - 10, pad.x + pad.speed);
+
+    ball.x += ball.vx;
+    ball.y += ball.vy;
+
+    if (ball.x < ball.r || ball.x > canvas.width - ball.r) ball.vx *= -1;
+    if (ball.y < ball.r) ball.vy *= -1;
+
+    // Pad bounce
+    if (ball.y + ball.r >= canvas.height - 30 && ball.x >= pad.x && ball.x <= pad.x + pad.w) {
+      sfx.click();
+      ball.vy = -Math.abs(ball.vy);
+    }
+
+    if (ball.y > canvas.height) {
+      gameOver("Ball fell into oblivion!");
+      return;
+    }
+
+    // Bricks
+    let rem = 0;
+    ctx.fillStyle = "var(--purple)";
+    bricks.forEach(b => {
+      if (b.alive) {
+        rem++;
+        ctx.fillRect(b.x, b.y, b.w, b.h);
+        if (ball.x > b.x && ball.x < b.x + b.w && ball.y - ball.r < b.y + b.h && ball.y + ball.r > b.y) {
+          b.alive = false;
+          ball.vy *= -1;
+          sfx.point();
+          updateScore(20);
+        }
+      }
+    });
+
+    if (rem === 0) {
+      levelCompleted(400);
+      return;
+    }
+
+    // Draw pad & ball
+    ctx.fillStyle = "var(--cyan)";
+    ctx.fillRect(pad.x, canvas.height - 30, pad.w, pad.h);
+    ctx.beginPath();
+    ctx.arc(ball.x, ball.y, ball.r, 0, Math.PI * 2);
+    ctx.fill();
+
+    animFrameId = requestAnimationFrame(loop);
+  }
+  animFrameId = requestAnimationFrame(loop);
+}
+
+/* ---------------- 11. FLAPPY CYBER DROID ---------------- */
+function initFlappyDroid() {
+  const { canvas, ctx } = createCanvas(340, 400);
+  let droid = { y: 180, vy: 0 };
+  let pipes = [];
+  let score = 0;
+  let target = 5 + activeLevel * 2;
+  let nextPipe = 0;
+
+  function flap() {
+    sfx.jump();
+    droid.vy = -6.5;
+  }
+  window.onGameAction = (key) => { if (key === 'up' || key === 'act') flap(); };
+  window.addEventListener('keydown', (e) => { if (e.code === 'Space') flap(); });
+
+  function loop(time) {
+    ctx.fillStyle = "#070a1a";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    droid.vy += 0.36;
+    droid.y += droid.vy;
+
+    if (droid.y < 0 || droid.y > canvas.height) {
+      gameOver("Droid crashed!");
+      return;
+    }
+
+    if (time - nextPipe > Math.max(1600 - activeLevel * 100, 900)) {
+      nextPipe = time;
+      const gap = Math.max(120 - activeLevel * 8, 75);
+      const topH = Math.random() * (canvas.height - gap - 60) + 30;
+      pipes.push({ x: canvas.width, top: topH, gap, passed: false });
+    }
+
+    ctx.fillStyle = "var(--purple)";
+    for (let i = pipes.length - 1; i >= 0; i--) {
+      const p = pipes[i];
+      p.x -= 2.6 + activeLevel * 0.3;
+
+      ctx.fillRect(p.x, 0, 44, p.top);
+      ctx.fillRect(p.x, p.top + p.gap, 44, canvas.height);
+
+      if (60 + 12 > p.x && 60 - 12 < p.x + 44) {
+        if (droid.y - 10 < p.top || droid.y + 10 > p.top + p.gap) {
+          gameOver("Laser barrier impact!");
+          return;
+        }
+      }
+
+      if (!p.passed && p.x + 44 < 60) {
+        p.passed = true;
+        score++;
+        sfx.point();
+        updateScore(30);
+        msgEl.textContent = `Pipes cleared: ${score}/${target}`;
+        if (score >= target) {
+          levelCompleted(350);
+          return;
+        }
+      }
+      if (p.x < -60) pipes.splice(i, 1);
+    }
+
+    // Droid
+    ctx.fillStyle = "var(--cyan)";
+    ctx.beginPath();
+    ctx.arc(60, droid.y, 12, 0, Math.PI * 2);
+    ctx.fill();
+
+    animFrameId = requestAnimationFrame(loop);
+  }
+  animFrameId = requestAnimationFrame(loop);
+}
+
+/* ---------------- 12. PONG RETRO AI ---------------- */
+function initPong() {
+  const { canvas, ctx } = createCanvas(360, 360);
+  let pY = 140, aiY = 140;
+  let padH = Math.max(80 - activeLevel * 6, 45);
+  let ball = { x: 180, y: 180, vx: 3.8 + activeLevel * 0.5, vy: 2.5 };
+  let pScore = 0;
+  let target = 3 + activeLevel;
+
+  function loop() {
+    ctx.fillStyle = "#050714";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    if (touchState.up) pY = Math.max(10, pY - 6);
+    if (touchState.down) pY = Math.min(canvas.height - padH - 10, pY + 6);
+
+    // AI
+    if (aiY + padH / 2 < ball.y - 6) aiY += 3.2 + activeLevel * 0.4;
+    else if (aiY + padH / 2 > ball.y + 6) aiY -= 3.2 + activeLevel * 0.4;
+
+    ball.x += ball.vx;
+    ball.y += ball.vy;
+
+    if (ball.y < 6 || ball.y > canvas.height - 6) ball.vy *= -1;
+
+    // Player bounce
+    if (ball.x - 6 < 26 && ball.y > pY && ball.y < pY + padH) {
+      ball.vx = Math.abs(ball.vx);
+      sfx.click();
+    }
+    // AI bounce
+    if (ball.x + 6 > canvas.width - 26 && ball.y > aiY && ball.y < aiY + padH) {
+      ball.vx = -Math.abs(ball.vx);
+      sfx.click();
+    }
+
+    if (ball.x < 0) {
+      gameOver("AI scored past your paddle!");
+      return;
+    }
+    if (ball.x > canvas.width) {
+      pScore++;
+      sfx.point();
+      updateScore(50);
+      ball = { x: 180, y: 180, vx: -3.8, vy: 2 };
+      msgEl.textContent = `Score: ${pScore}/${target}`;
+      if (pScore >= target) {
+        levelCompleted(300);
+        return;
+      }
+    }
+
+    ctx.fillStyle = "var(--cyan)";
+    ctx.fillRect(16, pY, 10, padH);
+    ctx.fillStyle = "#ff2a85";
+    ctx.fillRect(canvas.width - 26, aiY, 10, padH);
+    ctx.fillStyle = "#fff";
+    ctx.fillRect(ball.x - 4, ball.y - 4, 8, 8);
+
+    animFrameId = requestAnimationFrame(loop);
+  }
+  animFrameId = requestAnimationFrame(loop);
+}
+
+/* ---------------- 13. MINESWEEPER 2099 ---------------- */
+function initMinesweeper() {
+  const sizes = [7, 8, 9, 10];
+  const minesCounts = [5, 8, 12, 16];
+  const size = sizes[activeLevel - 1];
+  const totalMines = minesCounts[activeLevel - 1];
+
+  let board = Array.from({ length: size }, () => Array(size).fill(0));
+  let revealed = Array.from({ length: size }, () => Array(size).fill(false));
+
+  // Place mines
+  let placed = 0;
+  while (placed < totalMines) {
+    let r = Math.floor(Math.random() * size), c = Math.floor(Math.random() * size);
+    if (board[r][c] !== 'M') { board[r][c] = 'M'; placed++; }
+  }
+  for (let r=0; r<size; r++) {
+    for (let c=0; c<size; c++) {
+      if (board[r][c] === 'M') continue;
+      let count = 0;
+      for (let dr=-1; dr<=1; dr++) {
+        for (let dc=-1; dc<=1; dc++) {
+          if (board[r+dr] && board[r+dr][c+dc] === 'M') count++;
+        }
+      }
+      board[r][c] = count;
+    }
+  }
+
+  const grid = document.createElement("div");
+  grid.className = "dom-grid";
+  grid.style.gridTemplateColumns = `repeat(${size}, 36px)`;
+
+  function render() {
+    grid.innerHTML = "";
+    let safeRemaining = 0;
+    for (let r=0; r<size; r++) {
+      for (let c=0; c<size; c++) {
+        const btn = document.createElement("button");
+        btn.className = "dom-cell";
+        btn.style.width = "36px";
+        btn.style.height = "36px";
+        btn.style.fontSize = "13px";
+        if (revealed[r][c]) {
+          btn.style.background = "#0e1530";
+          btn.textContent = board[r][c] === 0 ? "" : board[r][c];
+          if (board[r][c] === 'M') { btn.textContent = "💥"; btn.style.background = "#ff2a85"; }
+        } else {
+          safeRemaining++;
+          btn.textContent = "";
+          btn.onclick = () => {
+            if (board[r][c] === 'M') {
+              revealed[r][c] = true;
+              render();
+              gameOver("Detonation triggered! Grid collapsed.");
+            } else {
+              sfx.click();
+              revealCell(r, c);
+              render();
+            }
+          };
+        }
+        grid.appendChild(btn);
+      }
+    }
+    if (safeRemaining === totalMines) {
+      levelCompleted(350);
+    }
+  }
+
+  function revealCell(r, c) {
+    if (r<0 || r>=size || c<0 || c>=size || revealed[r][c]) return;
+    revealed[r][c] = true;
+    updateScore(10);
+    if (board[r][c] === 0) {
+      for (let dr=-1; dr<=1; dr++) for (let dc=-1; dc<=1; dc++) revealCell(r+dr, c+dc);
+    }
+  }
+
+  stage.appendChild(grid);
+  render();
+}
+
+/* ---------------- 14. SIMON MATRIX PATTERN ---------------- */
+function initSimon() {
+  const steps = 3 + activeLevel;
+  let sequence = [];
+  let userIdx = 0;
+  const colors = ["#00f2fe", "#9d4edd", "#ff2a85", "#facc15"];
+  for (let i = 0; i < steps; i++) sequence.push(Math.floor(Math.random() * 4));
+
+  const grid = document.createElement("div");
+  grid.className = "dom-grid";
+  grid.style.gridTemplateColumns = "repeat(2, 90px)";
+
+  const btns = colors.map((col, idx) => {
+    const b = document.createElement("button");
+    b.className = "dom-cell";
+    b.style.width = "90px";
+    b.style.height = "90px";
+    b.style.background = col;
+    b.style.opacity = "0.5";
+    b.onclick = () => {
+      sfx.tone(300 + idx * 100, 'sine', 0.1);
+      flash(idx);
+      if (sequence[userIdx] === idx) {
+        userIdx++;
+        updateScore(25);
+        if (userIdx === sequence.length) {
+          levelCompleted(300);
+        }
+      } else {
+        gameOver("Sequence mismatched!");
+      }
+    };
+    grid.appendChild(b);
+    return b;
+  });
+
+  function flash(idx) {
+    btns[idx].style.opacity = "1";
+    setTimeout(() => btns[idx].style.opacity = "0.5", 250);
+  }
+
+  function playSequence() {
+    let i = 0;
+    msgEl.textContent = "Observe the glowing nodes...";
+    const interval = setInterval(() => {
+      flash(sequence[i]);
+      sfx.tone(300 + sequence[i] * 100, 'sine', 0.1);
+      i++;
+      if (i >= sequence.length) {
+        clearInterval(interval);
+        msgEl.textContent = "Your turn: Replicate the sequence!";
+      }
+    }, 550);
+    currentCleanup = () => clearInterval(interval);
+  }
+
+  stage.appendChild(grid);
+  setTimeout(playSequence, 500);
+}
+
+/* ---------------- 15. WHACK-A-MOLE CYBER BUGS ---------------- */
+function initWhackMole() {
+  let score = 0;
+  let target = 6 + activeLevel * 2;
+  const grid = document.createElement("div");
+  grid.className = "dom-grid";
+  grid.style.gridTemplateColumns = "repeat(3, 80px)";
+
+  const holes = Array.from({ length: 9 }, () => {
+    const b = document.createElement("button");
+    b.className = "dom-cell";
+    b.style.height = "80px";
+    b.style.fontSize = "32px";
+    b.textContent = "🕳️";
+    grid.appendChild(b);
+    return b;
+  });
+
+  let activeIdx = -1;
+  const interval = setInterval(() => {
+    if (activeIdx !== -1) holes[activeIdx].textContent = "🕳️";
+    activeIdx = Math.floor(Math.random() * 9);
+    holes[activeIdx].textContent = "👾";
+    holes[activeIdx].onclick = () => {
+      if (holes[activeIdx].textContent === "👾") {
+        sfx.point();
+        holes[activeIdx].textContent = "💥";
+        score++;
+        updateScore(30);
+        msgEl.textContent = `Viruses purged: ${score}/${target}`;
+        if (score >= target) {
+          clearInterval(interval);
+          levelCompleted(350);
+        }
+      }
+    };
+  }, Math.max(900 - activeLevel * 75, 400));
+  currentCleanup = () => clearInterval(interval);
+
+  stage.appendChild(grid);
+}
+
+/* ---------------- 16. ASTEROID DODGE 360 ---------------- */
+function initAsteroids() {
+  const { canvas, ctx } = createCanvas(360, 360);
+  let ship = { x: 180, y: 180, a: 0, vx: 0, vy: 0 };
+  let rocks = [];
+  let surviveTime = 12 + activeLevel * 2;
+  let elapsed = 0;
+
+  for (let i = 0; i < 4 + activeLevel; i++) {
+    rocks.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * 60,
+      vx: (Math.random() - 0.5) * 3,
+      vy: Math.random() * 2 + 1,
+      r: 16
+    });
+  }
+
+  function loop() {
+    ctx.fillStyle = "#070a18";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    if (touchState.left) ship.a -= 0.08;
+    if (touchState.right) ship.a += 0.08;
+    if (touchState.up || touchState.act) {
+      ship.vx += Math.cos(ship.a) * 0.18;
+      ship.vy += Math.sin(ship.a) * 0.18;
+    }
+    ship.x = (ship.x + ship.vx + canvas.width) % canvas.width;
+    ship.y = (ship.y + ship.vy + canvas.height) % canvas.height;
+
+    // Rocks
+    ctx.fillStyle = "var(--purple)";
+    for (let r of rocks) {
+      r.x = (r.x + r.vx + canvas.width) % canvas.width;
+      r.y = (r.y + r.vy + canvas.height) % canvas.height;
+      ctx.beginPath();
+      ctx.arc(r.x, r.y, r.r, 0, Math.PI * 2);
+      ctx.fill();
+
+      if (Math.hypot(r.x - ship.x, r.y - ship.y) < r.r + 10) {
+        gameOver("Ship crushed by dense asteroid field!");
+        return;
+      }
+    }
+
+    // Ship
+    ctx.save();
+    ctx.translate(ship.x, ship.y);
+    ctx.rotate(ship.a);
+    ctx.fillStyle = "var(--cyan)";
+    ctx.beginPath();
+    ctx.moveTo(12, 0); ctx.lineTo(-10, -8); ctx.lineTo(-10, 8);
+    ctx.fill();
+    ctx.restore();
+
+    elapsed += 1/60;
+    updateScore(1);
+    msgEl.textContent = `Survive: ${(surviveTime - elapsed).toFixed(1)}s remaining`;
+    if (elapsed >= surviveTime) {
+      levelCompleted(350);
+      return;
+    }
+
+    animFrameId = requestAnimationFrame(loop);
+  }
+  animFrameId = requestAnimationFrame(loop);
+}
+
+/* ---------------- 17. COLOR MATCH REFLEX (STROOP TEST) ---------------- */
+function initColorMatch() {
+  const colors = [
+    { name: "CYAN", val: "#00f2fe" },
+    { name: "PURPLE", val: "#9d4edd" },
+    { name: "PINK", val: "#ff2a85" },
+    { name: "GOLD", val: "#facc15" }
+  ];
+  let score = 0;
+  const target = 5 + activeLevel;
+  let isMatch = false;
+
+  const box = document.createElement("div");
+  box.style.textAlign = "center";
+
+  const wordEl = document.createElement("div");
+  wordEl.style.fontSize = "38px";
+  wordEl.style.fontWeight = "900";
+  wordEl.style.margin = "25px 0";
+  box.appendChild(wordEl);
+
+  const panel = document.createElement("div");
+  panel.className = "dom-btn-panel";
+
+  const yesBtn = document.createElement("button");
+  yesBtn.className = "dom-cell";
+  yesBtn.style.padding = "10px 30px";
+  yesBtn.textContent = "MATCH (YES)";
+  yesBtn.onclick = () => answer(true);
+
+  const noBtn = document.createElement("button");
+  noBtn.className = "dom-cell";
+  noBtn.style.padding = "10px 30px";
+  noBtn.textContent = "DIFFERENT (NO)";
+  noBtn.onclick = () => answer(false);
+
+  panel.appendChild(yesBtn);
+  panel.appendChild(noBtn);
+  box.appendChild(panel);
+
+  function nextWord() {
+    const textIdx = Math.floor(Math.random() * colors.length);
+    isMatch = Math.random() > 0.5;
+    const colorIdx = isMatch ? textIdx : (textIdx + 1 + Math.floor(Math.random() * 3)) % 4;
+
+    wordEl.textContent = colors[textIdx].name;
+    wordEl.style.color = colors[colorIdx].val;
+    msgEl.textContent = `Score: ${score}/${target} • Does text match color?`;
+  }
+
+  function answer(userAns) {
+    if (userAns === isMatch) {
+      sfx.point();
+      score++;
+      updateScore(30);
+      if (score >= target) levelCompleted(250);
+      else nextWord();
+    } else {
+      gameOver("Reflex cognitive slip!");
+    }
+  }
+
+  stage.appendChild(box);
+  nextWord();
+}
+
+/* ---------------- 18. TOWER STACKER 3D EFFECT ---------------- */
+function initTowerStacker() {
+  const { canvas, ctx } = createCanvas(320, 380);
+  let stack = [{ x: 90, w: 140, y: 340 }];
+  let cur = { x: 0, w: 140, y: 315, vx: 2.8 + activeLevel * 0.4 };
+  let placed = 0;
+  let target = 5 + activeLevel;
+
+  function place() {
+    const prev = stack[stack.length - 1];
+    const diff = cur.x - prev.x;
+    if (Math.abs(diff) >= cur.w) {
+      gameOver("Stack collapsed over the edge!");
+      return;
+    }
+    sfx.click();
+    const newW = cur.w - Math.abs(diff);
+    const newX = diff > 0 ? cur.x : prev.x;
+    stack.push({ x: newX, w: newW, y: cur.y });
+    placed++;
+    updateScore(50);
+    msgEl.textContent = `Floors built: ${placed}/${target}`;
+
+    if (placed >= target) {
+      levelCompleted(400);
+      return;
+    }
+
+    cur = { x: 0, w: newW, y: cur.y - 25, vx: (cur.vx > 0 ? 1 : -1) * (Math.abs(cur.vx) + 0.2) };
+    if (cur.y < 50) {
+      stack.forEach(s => s.y += 25);
+      cur.y += 25;
+    }
+  }
+
+  window.onGameAction = (key) => { if (key === 'act' || key === 'up') place(); };
+  window.addEventListener('keydown', (e) => { if (e.code === 'Space') place(); });
+
+  function loop() {
+    ctx.fillStyle = "#080c1e";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    cur.x += cur.vx;
+    if (cur.x < 0 || cur.x + cur.w > canvas.width) cur.vx *= -1;
+
+    // Draw stack
+    stack.forEach((s, idx) => {
+      ctx.fillStyle = idx % 2 === 0 ? "var(--purple)" : "var(--cyan)";
+      ctx.fillRect(s.x, s.y, s.w, 22);
+    });
+
+    // Draw current
+    ctx.fillStyle = "#ff2a85";
+    ctx.fillRect(cur.x, cur.y, cur.w, 22);
+
+    animFrameId = requestAnimationFrame(loop);
+  }
+  animFrameId = requestAnimationFrame(loop);
+}
+
+/* ---------------- 19. 2048 NEON FUSION ---------------- */
+function init2048() {
+  const targetVal = [256, 512, 1024, 2048][activeLevel - 1];
+  let board = Array.from({ length: 4 }, () => Array(4).fill(0));
+
+  function addTile() {
+    const empties = [];
+    for (let r=0; r<4; r++) for (let c=0; c<4; c++) if (!board[r][c]) empties.push({r,c});
+    if (empties.length) {
+      const p = empties[Math.floor(Math.random() * empties.length)];
+      board[p.r][p.c] = Math.random() > 0.1 ? 2 : 4;
+    }
+  }
+
+  const grid = document.createElement("div");
+  grid.className = "dom-grid";
+  grid.style.gridTemplateColumns = "repeat(4, 60px)";
+
+  function render() {
+    grid.innerHTML = "";
+    let max = 0;
+    for (let r=0; r<4; r++) {
+      for (let c=0; c<4; c++) {
+        const v = board[r][c];
+        if (v > max) max = v;
+        const b = document.createElement("div");
+        b.className = "dom-cell";
+        b.style.width = "60px";
+        b.style.height = "60px";
+        b.style.fontSize = "16px";
+        b.textContent = v || "";
+        b.style.background = v ? (v >= 64 ? "var(--purple)" : "#162047") : "#0a0e24";
+        grid.appendChild(b);
+      }
+    }
+    msgEl.textContent = `Reach ${targetVal}! (Highest: ${max})`;
+    if (max >= targetVal) levelCompleted(450);
+  }
+
+  function slide(row) {
+    let arr = row.filter(x => x);
+    for (let i = 0; i < arr.length - 1; i++) {
+      if (arr[i] === arr[i + 1]) {
+        arr[i] *= 2;
+        updateScore(arr[i]);
+        arr.splice(i + 1, 1);
+      }
+    }
+    while (arr.length < 4) arr.push(0);
+    return arr;
+  }
+
+  function move(dir) {
+    let changed = false;
+    let old = JSON.stringify(board);
+    if (dir === 'left') board = board.map(r => slide(r));
+    if (dir === 'right') board = board.map(r => slide(r.reverse()).reverse());
+    if (dir === 'up') {
+      for (let c=0; c<4; c++) {
+        let col = [board[0][c], board[1][c], board[2][c], board[3][c]];
+        col = slide(col);
+        for (let r=0; r<4; r++) board[r][c] = col[r];
+      }
+    }
+    if (dir === 'down') {
+      for (let c=0; c<4; c++) {
+        let col = [board[3][c], board[2][c], board[1][c], board[0][c]];
+        col = slide(col);
+        for (let r=0; r<4; r++) board[3-r][c] = col[r];
+      }
+    }
+    if (old !== JSON.stringify(board)) {
+      sfx.click();
+      addTile();
+      render();
+    }
+  }
+
+  window.onGameAction = (k) => move(k);
+  addTile(); addTile();
+  stage.appendChild(grid);
+  render();
+}
+
+/* ---------------- 20. KNIFE THROW TARGET HIT ---------------- */
+function initKnifeHit() {
+  const { canvas, ctx } = createCanvas(340, 360);
+  let angle = 0;
+  let speed = 0.03 + activeLevel * 0.008;
+  let knives = [];
+  let thrown = 0;
+  let target = 5 + activeLevel;
+  let activeKnife = { y: 310, moving: false };
+
+  function throwKnife() {
+    if (activeKnife.moving) return;
+    sfx.laser();
+    activeKnife.moving = true;
+  }
+
+  window.onGameAction = (key) => { if (key === 'act' || key === 'up') throwKnife(); };
+  window.addEventListener('keydown', (e) => { if (e.code === 'Space') throwKnife(); });
+
+  function loop() {
+    ctx.fillStyle = "#070b1a";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    angle += speed;
+
+    if (activeKnife.moving) {
+      activeKnife.y -= 14;
+      if (activeKnife.y <= 130) {
+        // Check collision with other knives
+        const hitAngle = -angle;
+        for (let k of knives) {
+          let diff = Math.abs(((k - hitAngle) % (Math.PI*2)));
+          if (diff < 0.25 || diff > Math.PI*2 - 0.25) {
+            gameOver("Blade deflection! Collision on target wheel.");
+            return;
+          }
+        }
+        sfx.point();
+        knives.push(hitAngle);
+        thrown++;
+        updateScore(40);
+        msgEl.textContent = `Knives embedded: ${thrown}/${target}`;
+        activeKnife = { y: 310, moving: false };
+
+        if (thrown >= target) {
+          levelCompleted(350);
+          return;
+        }
+      }
+    }
+
+    // Target wheel
+    ctx.save();
+    ctx.translate(170, 100);
+    ctx.rotate(angle);
+    ctx.fillStyle = "var(--purple)";
+    ctx.beginPath();
+    ctx.arc(0, 0, 42, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Embedded knives
+    ctx.fillStyle = "var(--cyan)";
+    knives.forEach(a => {
+      ctx.save();
+      ctx.rotate(a);
+      ctx.fillRect(-3, 42, 6, 28);
+      ctx.restore();
+    });
+    ctx.restore();
+
+    // Active knife
+    ctx.fillStyle = "var(--cyan)";
+    ctx.fillRect(167, activeKnife.y, 6, 28);
+
+    animFrameId = requestAnimationFrame(loop);
+  }
+  animFrameId = requestAnimationFrame(loop);
+}
+
+/* ---------------- 21. CONNECT FOUR NEON ---------------- */
+function initConnectFour() {
+  const rows = 6, cols = 7;
+  let board = Array.from({ length: rows }, () => Array(cols).fill(0));
+  let turn = 1; // 1 = player, 2 = AI
+  let active = true;
+
+  const grid = document.createElement("div");
+  grid.className = "dom-grid";
+  grid.style.gridTemplateColumns = `repeat(${cols}, 38px)`;
+
+  function checkWin(p) {
+    // Horizontal, Vertical, Diagonals
+    for (let r=0; r<rows; r++) for (let c=0; c<cols-3; c++) if ([0,1,2,3].every(i => board[r][c+i] === p)) return true;
+    for (let r=0; r<rows-3; r++) for (let c=0; c<cols; c++) if ([0,1,2,3].every(i => board[r+i][c] === p)) return true;
+    for (let r=0; r<rows-3; r++) for (let c=0; c<cols-3; c++) if ([0,1,2,3].every(i => board[r+i][c+i] === p)) return true;
+    for (let r=3; r<rows; r++) for (let c=0; c<cols-3; c++) if ([0,1,2,3].every(i => board[r-i][c+i] === p)) return true;
+    return false;
+  }
+
+  function dropPiece(col, p) {
+    for (let r=rows-1; r>=0; r--) {
+      if (board[r][col] === 0) {
+        board[r][col] = p;
+        return true;
+      }
+    }
+    return false;
+  }
+
+  function render() {
+    grid.innerHTML = "";
+    for (let r=0; r<rows; r++) {
+      for (let c=0; c<cols; c++) {
+        const cell = document.createElement("button");
+        cell.className = "dom-cell";
+        cell.style.width = "38px"; cell.style.height = "38px";
+        cell.style.borderRadius = "50%";
+        if (board[r][c] === 1) cell.style.background = "var(--cyan)";
+        if (board[r][c] === 2) cell.style.background = "#ff2a85";
+        cell.onclick = () => {
+          if (!active || turn !== 1) return;
+          if (dropPiece(c, 1)) {
+            sfx.click();
+            render();
+            if (checkWin(1)) { active = false; levelCompleted(300); return; }
+            turn = 2;
+            msgEl.textContent = "AI calculating next drop...";
+            setTimeout(aiDrop, 350);
+          }
+        };
+        grid.appendChild(cell);
+      }
+    }
+  }
+
+  function aiDrop() {
+    if (!active) return;
+    const valids = [];
+    for (let c=0; c<cols; c++) if (board[0][c] === 0) valids.push(c);
+    if (!valids.length) return;
+    let chosen = valids[Math.floor(Math.random() * valids.length)];
+    dropPiece(chosen, 2);
+    sfx.point();
+    render();
+    if (checkWin(2)) { active = false; gameOver("AI connected 4 in a row!"); return; }
+    turn = 1;
+    msgEl.textContent = "Your turn (Cyan)!";
+  }
+
+  stage.appendChild(grid);
+  render();
+}
+
+/* ---------------- 22. LUNAR LANDER PHYSICS ---------------- */
+function initLunarLander() {
+  const { canvas, ctx } = createCanvas(360, 360);
+  let lander = { x: 180, y: 40, vx: 0.8, vy: 0, fuel: 100 };
+  let gravity = 0.04 + activeLevel * 0.01;
+  const pad = { x: 130, y: 330, w: 90 };
+
+  window.onGameAction = (key) => {
+    if ((key === 'up' || key === 'act') && lander.fuel > 0) {
+      lander.vy -= 0.18;
+      lander.fuel -= 2;
+      sfx.tone(180, 'sawtooth', 0.05);
+    }
+    if (key === 'left' && lander.fuel > 0) { lander.vx -= 0.08; lander.fuel -= 1; }
+    if (key === 'right' && lander.fuel > 0) { lander.vx += 0.08; lander.fuel -= 1; }
+  };
+
+  function loop() {
+    ctx.fillStyle = "#050714";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    lander.vy += gravity;
+    lander.x += lander.vx;
+    lander.y += lander.vy;
+
+    // Landing pad
+    ctx.fillStyle = "var(--cyan)";
+    ctx.fillRect(pad.x, pad.y, pad.w, 8);
+
+    // Lander
+    ctx.fillStyle = "#fff";
+    ctx.fillRect(lander.x - 8, lander.y - 12, 16, 12);
+
+    msgEl.textContent = `Fuel: ${Math.max(0, lander.fuel)}% • Descent Rate: ${lander.vy.toFixed(2)}`;
+
+    // Touch down check
+    if (lander.y >= pad.y) {
+      if (lander.x > pad.x && lander.x < pad.x + pad.w && Math.abs(lander.vy) < 1.4 && Math.abs(lander.vx) < 0.9) {
+        levelCompleted(350);
+      } else {
+        gameOver("Lander destroyed on crash landing!");
+      }
+      return;
+    }
+
+    if (lander.x < 0 || lander.x > canvas.width) {
+      gameOver("Drifted off atmospheric orbit!");
+      return;
+    }
+
+    animFrameId = requestAnimationFrame(loop);
+  }
+  animFrameId = requestAnimationFrame(loop);
+}
+
+/* ---------------- 23. CROSS THE CYBER ROAD (FROGGER) ---------------- */
+function initCrossRoad() {
+  const { canvas, ctx } = createCanvas(360, 360);
+  let player = { x: 165, y: 320, size: 24 };
+  let lanes = [];
+  let score = 0;
+  let target = 2 + activeLevel;
+
+  for (let i = 0; i < 4; i++) {
+    lanes.push({
+      y: 80 + i * 55,
+      cars: [{ x: 40, w: 42 }, { x: 200, w: 42 }],
+      speed: (i % 2 === 0 ? 1 : -1) * (2 + activeLevel * 0.5)
+    });
+  }
+
+  window.onGameAction = (key) => {
+    sfx.click();
+    if (key === 'up') player.y -= 30;
+    if (key === 'down') player.y = Math.min(320, player.y + 30);
+    if (key === 'left') player.x = Math.max(10, player.x - 30);
+    if (key === 'right') player.x = Math.min(canvas.width - 34, player.x + 30);
+  };
+
+  function loop() {
+    ctx.fillStyle = "#070b1a";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Goal zone
+    ctx.fillStyle = "rgba(0, 242, 254, 0.15)";
+    ctx.fillRect(0, 0, canvas.width, 50);
+
+    // Draw Lanes
+    lanes.forEach(l => {
+      ctx.fillStyle = "#ff2a85";
+      l.cars.forEach(c => {
+        c.x = (c.x + l.speed + canvas.width) % canvas.width;
+        ctx.fillRect(c.x, l.y, c.w, 22);
+
+        if (player.x + player.size > c.x && player.x < c.x + c.w && player.y + player.size > l.y && player.y < l.y + 22) {
+          gameOver("Struck by high-speed hovercraft!");
+          return;
+        }
+      });
+    });
+
+    // Player
+    ctx.fillStyle = "var(--cyan)";
+    ctx.fillRect(player.x, player.y, player.size, player.size);
+
+    if (player.y <= 40) {
+      sfx.point();
+      score++;
+      updateScore(50);
+      player = { x: 165, y: 320, size: 24 };
+      msgEl.textContent = `Crossings: ${score}/${target}`;
+      if (score >= target) {
+        levelCompleted(300);
+        return;
+      }
+    }
+
+    animFrameId = requestAnimationFrame(loop);
+  }
+  animFrameId = requestAnimationFrame(loop);
+}
+
+/* ---------------- 24. TYPING SPEED CYBER HACK ---------------- */
+function initTypingHack() {
+  const wordsList = [
+    ["BYTE","CODE","PORT","NODE"],
+    ["CYBER","MATRIX","ROUTER","PACKET"],
+    ["PROTOCOL","FIREWALL","DATABASE","SECURITY"],
+    ["ALGORITHM","DECRYPTOR","ENCRYPTION","MAINFRAME"]
+  ];
+  const list = wordsList[Math.min(activeLevel - 1, 3)];
+  let falling = [];
+  let cleared = 0;
+  let target = 4 + activeLevel * 2;
+  let nextSpawn = 0;
+
+  const box = document.createElement("div");
+  box.style.width = "100%";
+  box.style.display = "flex";
+  box.style.flexDirection = "column";
+  box.style.alignItems = "center";
+
+  const { canvas, ctx } = createCanvas(360, 280);
+  box.appendChild(canvas);
+
+  const inp = document.createElement("input");
+  inp.style.background = "#0e142e";
+  inp.style.border = "2px solid var(--cyan)";
+  inp.style.borderRadius = "8px";
+  inp.style.color = "#fff";
+  inp.style.fontSize = "16px";
+  inp.style.padding = "8px 16px";
+  inp.style.marginTop = "10px";
+  inp.placeholder = "Type falling commands...";
+  box.appendChild(inp);
+  stage.appendChild(box);
+  inp.focus();
+
+  inp.addEventListener("input", () => {
+    const val = inp.value.trim().toUpperCase();
+    for (let i = falling.length - 1; i >= 0; i--) {
+      if (falling[i].text === val) {
+        sfx.point();
+        falling.splice(i, 1);
+        cleared++;
+        updateScore(40);
+        inp.value = "";
+        msgEl.textContent = `Words decrypted: ${cleared}/${target}`;
+        if (cleared >= target) {
+          levelCompleted(350);
+        }
+        break;
+      }
+    }
+  });
+
+  function loop(time) {
+    ctx.fillStyle = "#060914";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    if (time - nextSpawn > Math.max(1800 - activeLevel * 120, 800)) {
+      nextSpawn = time;
+      falling.push({
+        text: list[Math.floor(Math.random() * list.length)],
+        x: Math.random() * (canvas.width - 120) + 20,
+        y: -10,
+        speed: 1 + activeLevel * 0.2
+      });
+    }
+
+    ctx.fillStyle = "var(--cyan)";
+    ctx.font = "bold 15px 'JetBrains Mono', monospace";
+    for (let i = falling.length - 1; i >= 0; i--) {
+      const f = falling[i];
+      f.y += f.speed;
+      ctx.fillText(f.text, f.x, f.y);
+
+      if (f.y > canvas.height) {
+        gameOver("Security firewall breached!");
+        return;
+      }
+    }
+    animFrameId = requestAnimationFrame(loop);
+  }
+  animFrameId = requestAnimationFrame(loop);
+}
+
+/* ========================================================
+   6. BOOTSTRAP INITIALIZATION
+======================================================== */
+window.onload = function() {
+  document.getElementById("stat-count").textContent = GAME_DATABASE.length;
+  renderCards();
+};
+</script>
+</body>
+</html>
